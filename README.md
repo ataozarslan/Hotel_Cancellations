@@ -43,3 +43,11 @@ They have provided you with their bookings data in a file called `hotel_bookings
 * Which general recommendations for the hotel can you make?
 
 **NOTE:** This project is a Datacamp Competition. You can reach the competition page via [Predicting hotel cancellations](https://app.datacamp.com/learn/competitions/predict-hotel-cancellation)
+
+## 🛜 API Endpoint
+
+### Testing Data 1
+![testing_data_1](demos/test_data_1.gif)
+
+### Testing Data 2
+![testing_data_2](demos/test_data_2.gif)
