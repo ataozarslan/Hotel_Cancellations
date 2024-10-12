@@ -1,3 +1,4 @@
+import sqlite3
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,6 +8,7 @@ from joblib import load
 from datetime import date, datetime
 import shap
 import pickle
+from io import BytesIO
 
 # Sayfa Ayarları
 st.set_page_config(
@@ -101,6 +103,10 @@ if st.button("Submit"):
 
     st.dataframe(online_results_df)
 
+    with sqlite3.connect("hotel_db.sqlite") as conn:
+        cursor = conn.cursor()
+        online_results_df.to_sql("predictions", conn, if_exists="append", index=False)
+
     with open("explainer.pkl", "rb") as explainer:
         explainer = pickle.load(explainer)
     
@@ -113,6 +119,19 @@ if st.button("Submit"):
 
     st.info("You can find the Shap Explanation of your prediction!")
     st.pyplot(fig)
+
+    # Görseli geçici belleğe kaydetmek için BytesIO kullanma
+    buffer = BytesIO()
+    fig.savefig(buffer, format="png")
+    buffer.seek(0)  # Bellek konumunu başa al
+
+    # Download butonu ekleme
+    st.download_button(
+        label="Download SHAP Explanation",
+        data=buffer,
+        file_name="shap_local_explanation.png",
+        mime="image/png"
+        )
 
 else:
     st.markdown("Please click the *Submit Button*!")
