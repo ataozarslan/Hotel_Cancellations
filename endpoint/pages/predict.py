@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
@@ -80,12 +81,12 @@ if st.button("Submit"):
 
     # Sonuçları Görüntülemek için DataFrame
     online_results_df = pd.DataFrame({
-    'Name': [name],
-    'Surname': [surname],
+    "Name": [name],
+    "Surname": [surname],
     "Date": [today],
     "Time": [time],
-    "Prediction": result['prediction'],
-    "Cancellation Probability (%)": result['probability']*100,
+    "Prediction": result['Is Canceled'],
+    "Cancellation Probability": '%' + str(np.round((result['Cancelation Probability (%)']*100),2)),
     "Arrival Date": [arrival_day],
     "Arrival Month": [arrival_month],
     "Arrival Year": [arrival_year],
